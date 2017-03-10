@@ -1,0 +1,100 @@
+<html>
+    <head>NYU AD 2017 Official Directory</head>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+    <script src="http://masonry.desandro.com/masonry.pkgd.js"></script>
+    <style>
+        * { box-sizing: border-box; }
+
+body { font-family: helvetica; }
+
+/* ---- grid ---- */
+
+.grid {
+  background: #EEE;
+  max-width: 1200px;
+}
+
+/* clearfix */
+.grid:after {
+  content: '';
+  display: block;
+  clear: both;
+}
+
+/* ---- grid-item ---- */
+
+.grid-item {
+  width: 350px;
+  height: 500px;
+  float: left;
+  background: linen;
+  border: 2px solid #333;
+  border-color: hsla(0, 0%, 0%, 0.5);
+  border-radius: 5px;
+  margin-bottom: 10px;
+}
+
+.grid-item--width2 { width: 320px; }
+.grid-item--width3 { width: 480px; }
+.grid-item--width4 { width: 640px; }
+
+.grid-item--height2 { height: 200px; }
+.grid-item--height3 { height: 260px; }
+.grid-item--height4 { height: 360px; }
+
+
+.bio { font-size: 66%; }
+.field { margin: 5px 5px 5px 5px;}
+.name { font-size: 125%; font-weight: bold; }
+.attr { text-decoration: underline; }
+
+</style>
+<body>
+    
+<h1>NYU AD 2017 Directory</h1>
+
+<div class="grid">
+    {% for u in users %}
+    <div class="grid-item">
+        <div class="name-role field">
+        <span class="name">{{u.name}}</span> <span class="role">({{u.role}})</span>
+      </div>
+        <div class="country field">
+          I am a citizen of {{u.country_ori}} and I live in {{u.country_resi}}.
+        </div>
+        <div class="bio field">
+          {{u.bio}}
+        </div>
+        <div class="secret_power field">
+          <span class="attr">Secret power:</span>
+          {{u.secret_power}}
+        </div>
+       <div class="secret_fact field">
+        <span class="attr">Secret fact:</span>
+          {{u.secret_fact}}
+        </div>
+        <div class="looking_fr field">
+        <span class="attr">Looking for:</span>
+          {{u.looking_for}}
+        </div>
+        <div class="tech_interest field">
+        <span class="attr">Tech interest:</span>
+          {{u.tech_interest}}
+        </div>
+        <br/>
+        <div align="center">
+        <img height="100px" src="{{u.picture}}">
+      </div>
+   </div>
+{% endfor %}
+</div>
+
+    </body>
+    
+    <script>
+        $('.grid').masonry({
+  itemSelector': '.grid-item',
+  'gutter': 50,
+});
+    </script> 
+</html>
