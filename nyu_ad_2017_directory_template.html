@@ -1,100 +1,172 @@
 <html>
-    <head>NYU AD 2017 Official Directory</head>
+<head>NYU AD 2017 Official Directory</head>
     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
     <script src="http://masonry.desandro.com/masonry.pkgd.js"></script>
     <style>
-        * { box-sizing: border-box; }
+* { box-sizing: border-box; }
 
-body { font-family: helvetica; }
+body {
+    font-family: helvetica;
+    /*
+    background: orange;
+    background: #57068C;
+    */
+}
 
 /* ---- grid ---- */
 
-.grid {
-  background: #EEE;
-  max-width: 1200px;
-}
-
-/* clearfix */
-.grid:after {
-  content: '';
-  display: block;
-  clear: both;
-}
-
-/* ---- grid-item ---- */
-
-.grid-item {
-  width: 350px;
-  height: 500px;
-  float: left;
-  background: linen;
-  border: 2px solid #333;
-  border-color: hsla(0, 0%, 0%, 0.5);
-  border-radius: 5px;
-  margin-bottom: 10px;
-}
-
-.grid-item--width2 { width: 320px; }
-.grid-item--width3 { width: 480px; }
-.grid-item--width4 { width: 640px; }
-
-.grid-item--height2 { height: 200px; }
-.grid-item--height3 { height: 260px; }
-.grid-item--height4 { height: 360px; }
-
-
 .bio { font-size: 66%; }
-.field { margin: 5px 5px 5px 5px;}
-.name { font-size: 125%; font-weight: bold; }
+.field {
+    margin: 10px 5px 0px 5px;
+    font-family: 'Georgia', 'Times New Roman', 'Times', serif;
+}
+.name {
+    font-size: 125%;
+    font-weight: bold;
+}
 .attr { text-decoration: underline; }
 
+.grid {
+    width: 750px;
+    max-width: 1200px;
+    height: 520px;
+    background: #00A2B0;
+    margin: auto;
+    padding: 10px;
+    /*
+    */
+}
+.div-left {
+    width: 500px;
+    height: 500px;
+    position: relative;
+    /*
+    */
+    background: #57068C;
+    float: left;
+}
+.div-right {
+    height: 500px;
+    position: relative;
+    margin-left: 510px;
+    /*
+    background: #00AAAA;
+    */
+}
+
+.profile-pic {
+    width: 510px;
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%,-50%);
+}
+
+.nyu-logo {
+    width: 65px;
+    position:absolute;
+    /*
+    right: 70px; bottom: 100px;
+    right: 0px; bottom: 0px;
+    */
+    right: 160px; bottom: -10px;
+}
+
+.triangle1 {
+    width: 0;
+    height: 0;
+    position:absolute;
+    right: -10px;
+    bottom: -10px;
+    z-index: 5;
+    border-top: 160px solid transparent;
+    border-bottom: 160px solid #00A2B0;
+    border-left: 160px solid transparent;
+}
+
+.triangle2 {
+    width: 0;
+    height: 0;
+    position:absolute;
+    right: -10px;
+    bottom: -10px;
+    border-top: 330px solid transparent;
+    border-bottom: 330px solid white;
+    border-left: 330px solid transparent;
+}
+
+#floating-text {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    z-index: 10;
+}
+
+#floating-anchor {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+}
+
 </style>
+
 <body>
-    
 <h1>NYU AD 2017 Directory</h1>
 
-<div class="grid">
-    {% for u in users %}
-    <div class="grid-item">
-        <div class="name-role field">
-        <span class="name">{{u.name}}</span> <span class="role">({{u.role}})</span>
-      </div>
-        <div class="country field">
-          I am a citizen of {{u.country_ori}} and I live in {{u.country_resi}}.
-        </div>
-        <div class="bio field">
-          {{u.bio}}
-        </div>
-        <div class="secret_power field">
-          <span class="attr">Secret power:</span>
-          {{u.secret_power}}
-        </div>
-       <div class="secret_fact field">
-        <span class="attr">Secret fact:</span>
-          {{u.secret_fact}}
-        </div>
-        <div class="looking_fr field">
-        <span class="attr">Looking for:</span>
-          {{u.looking_for}}
-        </div>
-        <div class="tech_interest field">
-        <span class="attr">Tech interest:</span>
-          {{u.tech_interest}}
-        </div>
-        <br/>
-        <div align="center">
-        <img height="100px" src="{{u.picture}}">
-      </div>
-   </div>
-{% endfor %}
-</div>
 
-    </body>
-    
-    <script>
-        $('.grid').masonry({
+<section class="grid">
+    <div class="div-left">
+        <div align="center">
+            <img class="inner profile-pic" src="https://avatars3.githubusercontent.com/u/5465723?v=3&s=460">
+        </div>
+    </div>
+    <div class="div-right">
+        <div id="floating-text">
+            <div class="name-role field">
+              <span class="name">Fabricio  PH</span>
+              <span class="role" style="color: #AAAAAA;">(Mentor)</span>
+            </div>
+            <div class="affiliation field">
+                Google Inc.
+            </div>
+            <div class="country field">
+                Country (origin/residency): Argentina / USA
+            </div>
+            <div class="tech_interest field">
+                <span class="attr">Good at:</span>
+                Django, Python, App Engine.
+            </div>
+            <div class="bio field">
+                More about you: {{u.bio}}
+            </div>
+            <br/>
+            <div class="offline_hobby field">
+                <span class="attr">Love to do:</span>
+                {{u.offline_hobby}}
+            </div>
+            <div class="linkedin field">
+                <span class="attr">LinkedIn:</span>
+            </div>
+            <img class="nyu-logo" src="http://sites.nyuad.nyu.edu/hackathon/wp-content/uploads/2015/09/hackathon-logo.png">
+        </div>
+        <div id="floating-anchor">
+            <div class="triangle1"></div>
+        </div>
+        <div id="floating-anchor">
+            <div class="triangle2"></div>
+        </div>
+    </div>
+</section>
+
+</body>
+
+<script>
+$('.grid').masonry({
   itemSelector': '.grid-item',
   'gutter': 50,
 });
-    </script> 
+</script>
 </html>
