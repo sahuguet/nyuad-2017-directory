@@ -85,7 +85,6 @@ body {
 
 /* ---- grid ---- */
 .grid {
-  background: #EEE;
   max-width: 1200px;
 }
 /* clearfix */
@@ -119,57 +118,60 @@ body {
 
 <div class="grid">
 {% for u in users %}
-    <section class="cell">
-        <div class="cell-left">
-            <div align="center">
-                <img class="inner profile-pic" src="{{u.picture}}">
-            </div>
+
+<section class="cell">
+    <div class="cell-left">
+        <div align="center">
+            <img class="inner profile-pic" src="https://avatars3.githubusercontent.com/u/5465723?v=3&s=460">
         </div>
-        <div class="cell-right">
-            <div class="floating-text">
-                <div class="name field">
-                    <span class="name">{{u.name}}</span>
-                </div>
-                <div class="role field">
-                    <span class="role">({{u.role}})</span>
-                </div>
-                <div class="affiliation field">
-                    <span class="text-normal">{{u.affiliation}}</span>
-                </div>
-                <div class="country field">
-                    <span class="text-normal">Country</span>
-                    <span class="text-small">(origin/residency):</span><br/>
-                    <span class="text-normal">{{u.country_ori}} / {{u.country_resi}}</span>
-                </div>
-                <div class="tech_interest field">
-                    <span class="text-normal">
-                        <span class="attr">Good at:</span>
-                        {{u.secret_power}}
-                    </span>
-                </div>
-                <div class="bio field">
-                    More about you: {{u.bio}}
-                </div>
-                <br/>
-                <div class="offline_hobby field">
-                    <span class="text-normal">
-                        <span class="attr">Love to do:</span>
-                        {{u.offline_hobby}}
-                    </span>
-                </div>
-                <div class="linkedin field">
-                    <a class="text-normal" href="{{u.linkedin}}">LinkedIn</a>
-                </div>
-                <img class="nyu-logo" src="http://sites.nyuad.nyu.edu/hackathon/wp-content/uploads/2015/09/hackathon-logo.png">
+    </div>
+    <div class="cell-right">
+        <div class="floating-text">
+            <div class="name field">
+                <span class="name">{{u.name}}</span>
             </div>
-            <div class="floating-triangles">
-                <div class="triangle-blue"></div>
+            <div class="role field">
+                <span class="role">({{u.role}})</span>
             </div>
-            <div class="floating-triangles">
-                <div class="triangle-white"></div>
+            <div class="affiliation field">
+                <span class="text-normal">{{u.affiliation}}</span>
             </div>
+            <div class="country field">
+                <span class="text-normal">Country</span>
+                <span class="text-small">(origin/residency):</span><br/>
+                <span class="text-normal">{{u.country_ori}} / {{u.country_resi}}</span>
+            </div>
+            <div class="tech_interest field">
+                <span class="text-normal">
+                    <span class="attr">Good at:</span>
+                    {{u.secret_power}}
+                </span>
+            </div>
+            <div class="bio field">
+                More about you: {{u.bio}}
+            </div>
+            <br/>
+            <div class="offline_hobby field">
+                <span class="text-normal">
+                    <span class="attr">Love to do:</span>
+                    {{u.offline_hobby}}
+                </span>
+            </div>
+            <div class="linkedin field">
+                <a class="text-normal" href="{{u.linkedin}}">LinkedIn</a>
+            </div>
+            <img class="nyu-logo" src="http://sites.nyuad.nyu.edu/hackathon/wp-content/uploads/2015/09/hackathon-logo.png">
         </div>
-    </section>
+        <div class="floating-triangles">
+            <div class="triangle-blue"></div>
+        </div>
+        <div class="floating-triangles">
+            <div class="triangle-white"></div>
+        </div>
+    </div>
+</section>
+<br/>
+
 {% endfor %}
 </div>
 
