@@ -9,7 +9,7 @@ body {
     font-family: helvetica;
 }
 
-.grid {
+.cell {
     width: 750px;
     max-width: 1200px;
     height: 520px;
@@ -17,14 +17,14 @@ body {
     margin: auto;
     padding: 10px;
 }
-.grid-left {
+.cell-left {
     width: 500px;
     height: 500px;
     position: relative;
     background: #57068C;
     float: left;
 }
-.grid-right {
+.cell-right {
     height: 500px;
     position: relative;
     margin-left: 510px;
@@ -105,14 +105,13 @@ body {
 <body>
 <h1>NYU AD 2017 Directory</h1>
 
-
-<section class="grid">
-    <div class="grid-left">
+<section class="cell">
+    <div class="cell-left">
         <div align="center">
             <img class="inner profile-pic" src="https://avatars3.githubusercontent.com/u/5465723?v=3&s=460">
         </div>
     </div>
-    <div class="grid-right">
+    <div class="cell-right">
         <div class="floating-text">
             <div class="name field">
                 <span class="name">{{u.name}}</span>
