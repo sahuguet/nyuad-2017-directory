@@ -127,16 +127,17 @@ body {
     <div class="grid-right">
         <div id="floating-text">
             <div class="name field">
-              <span class="name">Fabricio  Pontes H</span>
+              <span class="name">{{u.name}}</span>
             </div>
             <div class="role field">
-              <span class="role" style="color: #7a7a7a;">(Mentor)</span>
+              <span class="role" style="color: #7a7a7a;">({{u.role}})</span>
               </div>
             <div class="affiliation field">
-                Google Inc.
+                {{u.affiliation}}
             </div>
             <div class="country field">
-                Country (origin/residency): Argentina / USA
+                Country <span class="text-small">(origin/residency):</span><br/>
+                {{u.country_ori}} / {{u.country_resi}}
             </div>
             <div class="tech_interest field">
                 <span class="attr">Good at:</span>
@@ -151,7 +152,7 @@ body {
                 {{u.offline_hobby}}
             </div>
             <div class="linkedin field">
-                <span class="attr">LinkedIn:</span>
+                <a href="{{u.linkedin}}">LinkedIn</a>
             </div>
             <img class="nyu-logo" src="http://sites.nyuad.nyu.edu/hackathon/wp-content/uploads/2015/09/hackathon-logo.png">
         </div>
