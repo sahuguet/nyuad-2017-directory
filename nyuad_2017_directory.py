@@ -30,6 +30,7 @@ with open('... CHANGE THE FOLDER NAME HERE .../NYU AD 2017 (Responses) - Form Re
         USERS.append({
             'name': name,
             'role': role,
+            'affiliation': affiliation,
             'picture': picture,
             'country_ori': country_ori,
             'country_resi': country_resi,
@@ -38,6 +39,7 @@ with open('... CHANGE THE FOLDER NAME HERE .../NYU AD 2017 (Responses) - Form Re
             'secret_power': secret_power,
             'looking_for': looking_for,
             'tech_interest': tech_interest,
+            'offline_hobby': offline_hobby,
             'linkedin': linkedin})
 
 
