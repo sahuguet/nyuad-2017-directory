@@ -37,7 +37,8 @@ with open('... CHANGE THE FOLDER NAME HERE .../NYU AD 2017 (Responses) - Form Re
             'secret_fact': secret_fact,
             'secret_power': secret_power,
             'looking_for': looking_for,
-            'tech_interest': tech_interest})
+            'tech_interest': tech_interest,
+            'linkedin': linkedin})
 
 
 # In[18]:
