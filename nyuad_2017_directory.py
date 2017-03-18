@@ -1,7 +1,4 @@
-
 # coding: utf-8
-
-# In[13]:
 
 import csv
 
@@ -43,22 +40,9 @@ with open('... CHANGE THE FOLDER NAME HERE .../NYU AD 2017 (Responses) - Form Re
             'linkedin': linkedin})
 
 
-# In[18]:
-
 from jinja2 import Environment, FileSystemLoader
 env = Environment(loader=FileSystemLoader("."),
         extensions=['jinja2.ext.with_'])
 template = env.get_template('nyu_ad_2017_directory_template.html')
 html = template.render({'users': USERS})
 print html
-
-
-# In[ ]:
-
-
-
-
-# In[ ]:
-
-
-
