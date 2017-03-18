@@ -27,10 +27,17 @@ with open('... CHANGE THE FOLDER NAME HERE .../NYU AD 2017 (Responses) - Form Re
                 print >> sys.stderr, "ERROR for %s" % picture
                 continue
             picture = 'https://drive.google.com/uc?export=view&id=' + slices[5]
-        USERS.append({'name': name, 'role': role, 'picture': picture,
-            'country_ori': country_ori, 'country_resi': country_resi,
-            'bio': bio, 'secret_fact': secret_fact, 'secret_power': secret_power,
-            'looking_for': looking_for, 'tech_interest': tech_interest})
+        USERS.append({
+            'name': name,
+            'role': role,
+            'picture': picture,
+            'country_ori': country_ori,
+            'country_resi': country_resi,
+            'bio': bio,
+            'secret_fact': secret_fact,
+            'secret_power': secret_power,
+            'looking_for': looking_for,
+            'tech_interest': tech_interest})
 
 
 # In[18]:
