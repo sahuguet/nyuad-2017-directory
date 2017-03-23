@@ -7,7 +7,7 @@ reload(sys)
 sys.setdefaultencoding("utf-8")
 
 USERS = []
-with open('... CHANGE THE FOLDER NAME HERE .../NYU AD 2017 (Responses) - Form Responses 1.csv') as csvfile:
+with open('nyuad-2017.csv') as csvfile:
     reader = csv.reader(csvfile)
     reader.next()
     for row in reader:

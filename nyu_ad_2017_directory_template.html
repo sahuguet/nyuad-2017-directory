@@ -35,6 +35,17 @@ body {
     position: absolute;
     top: 50%; left: 50%;
     transform: translate(-50%,-50%);
+    width: auto;
+    height: auto;
+    max-height: 500px;
+}
+
+.profile-frame {
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    width: 100%;
+    height: 100%;
 }
 
 .hackathon-logo {
@@ -127,12 +138,11 @@ body {
 
 <section class="cell">
     <div class="cell-left">
-        <div align="center">
-            <img class="inner profile-pic" src="{{u.picture}}">
+        <div align="center" class="profile-frame" style="background-image: url({{u.picture}});">
         </div>
     </div>
     <div class="cell-right">
-        <div class="floating-text">
+        <div class="floating-text" style="overflow-y: auto;">
             <div class="name field">
                 <span class="name">{{u.name}}</span>
             </div>
