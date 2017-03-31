@@ -12,20 +12,20 @@ body {
 .cell {
     width: 750px;
     max-width: 1200px;
-    height: 520px;
+    height: 420px;
     background: #00A2B0;
     margin: auto;
     padding: 10px;
 }
 .cell-left {
     width: 500px;
-    height: 500px;
+    height: 400px;
     position: relative;
     background: #57068C;
     float: left;
 }
 .cell-right {
-    height: 500px;
+    height: 400px;
     position: relative;
     margin-left: 510px;
 }
@@ -51,13 +51,19 @@ body {
 .hackathon-logo {
     width: 65px;
     position:absolute;
-    right: 25px; bottom: 135px;
+    left: 25px;
+    bottom: 25px;
+    opacity: 0.5;
+    filter: alpha(opacity=50);
 }
 
 .nyuad-logo {
     width: 65px;
     position:absolute;
-    right: 105px; bottom: 55px;
+    left: 105px;
+    bottom: 25px;
+    opacity: 0.5;
+    filter: alpha(opacity=50);
 }
 
 .triangle-blue {
@@ -127,6 +133,11 @@ body {
 .attr { text-decoration: underline; }
 .text-normal { font-size: 90%; }
 .text-small { font-size: 80%; }
+
+@media print {
+    .footer {page-break-after: always;}
+}
+
     </style>
 </head>
 
@@ -137,14 +148,18 @@ body {
 <h1 align="center">Meet the 2017 NYUAD Hackers for Social Good in the Arab World</h1>
 <br/>
 <br/>
-<br/>
+<br class="footer"/>
+
+
 
 <div class="grid">
 {% for u in users %}
 
-<section class="cell">
+<section class="cell {{ loop.cycle('footer', '') }}">
     <div class="cell-left">
         <div align="center" class="profile-frame" style="background-image: url({{u.picture}});">
+             <img class="hackathon-logo" src="http://sites.nyuad.nyu.edu/hackathon/wp-content/uploads/2015/09/hackathon-logo.png">
+            <img class="nyuad-logo" src="http://nyuad.nyu.edu/apps/nyuad/docroot/images/global/logo-155.png">
         </div>
     </div>
     <div class="cell-right">
@@ -181,8 +196,6 @@ body {
             <div class="linkedin field">
                 <a class="text-normal" href="{{u.linkedin}}">LinkedIn</a>
             </div>
-            <img class="hackathon-logo" src="http://sites.nyuad.nyu.edu/hackathon/wp-content/uploads/2015/09/hackathon-logo.png">
-            <img class="nyuad-logo" src="http://nyuad.nyu.edu/apps/nyuad/docroot/images/global/logo-155.png">
         </div>
         <div class="floating-triangles">
             <div class="triangle-blue"></div>
@@ -193,7 +206,7 @@ body {
     </div>
 </section>
 <br/>
-<br/>
+<br class="footer"/>
 
 {% endfor %}
 </div>
