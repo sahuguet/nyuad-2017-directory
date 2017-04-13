@@ -6,4 +6,4 @@ pip install jupyter
 pip install pandas
 ```
 Then run this command from the folder where the notebooks are
-`jupyter notebook`
+```jupyter notebook```
