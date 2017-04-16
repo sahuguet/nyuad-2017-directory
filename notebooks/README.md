@@ -1,5 +1,6 @@
-```virtualenv -p python3 nyuad2017
-cd`nyuad2017
+```
+virtualenv -p python3 nyuad2017
+cd nyuad2017
 source bin/activate
 pip install py3-ortools
 pip install jupyter
