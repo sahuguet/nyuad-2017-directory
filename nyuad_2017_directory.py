@@ -7,16 +7,46 @@ reload(sys)
 sys.setdefaultencoding("utf-8")
 
 USERS = []
-with open('nyuad-2017.csv') as csvfile:
+with open('data.csv') as csvfile:
     reader = csv.reader(csvfile)
     reader.next()
     for row in reader:
-        (t, email, name, facebook, linkedin, twitter, role, first_time,
-         experience, affiliation, gender, country_ori, country_resi,
-         bio, picture, secret_power, secret_fact,
-         offline_hobby, github, itunes, google_play, preferred_pl, preferred_frontend, preferred_backend,
-         looking_for, tech_interest, topics, my_idea, ideation_talk_yes_no,
-         technical_talk_yes_no, anything_else) = row
+        (t,
+            email,
+            name,
+            facebook,
+            linkedin,
+            twitter,
+            role,
+            first_time,
+         experience,
+         affiliation,
+         gender,
+         country_ori,
+         country_resi,
+         bio,
+         picture,
+         secret_power,
+         secret_fact,
+         offline_hobby,
+         github,
+         itunes,
+         google_play,
+         preferred_pl,
+         preferred_frontend,
+         preferred_backend,
+         looking_for,
+         tech_interest,
+         topics,
+         my_idea,
+         ideation_talk_yes_no,
+         technical_talk_yes_no,
+         anything_else,
+         job_title,
+         excited_about,
+         long_bio,
+         empty,
+         full_name_empty) = row
         # We process Google Dirve images.
         if picture.startswith('https://drive.google.com'):
             slices = picture.split('/')
