@@ -11,7 +11,8 @@ with open('data.csv') as csvfile:
     reader = csv.reader(csvfile)
     reader.next()
     for row in reader:
-        (t,
+        (
+            t,
             email,
             name,
             facebook,
@@ -19,41 +20,41 @@ with open('data.csv') as csvfile:
             twitter,
             role,
             first_time,
-         experience,
-         affiliation,
-         gender,
-         country_ori,
-         country_resi,
-         bio,
-         picture,
-         secret_power,
-         secret_fact,
-         offline_hobby,
-         github,
-         itunes,
-         google_play,
-         preferred_pl,
-         preferred_frontend,
-         preferred_backend,
-         looking_for,
-         tech_interest,
-         topics,
-         my_idea,
-         ideation_talk_yes_no,
-         technical_talk_yes_no,
-         anything_else,
-         job_title,
-         excited_about,
-         long_bio,
-         empty,
-         full_name_empty) = row
+            experience,
+            affiliation,
+             job_title,
+            gender,
+            country_ori,
+            country_resi,
+            bio_short,
+            bio_long,
+            picture,
+            secret_power,
+            secret_fact,
+            offline_hobby,
+            github,
+            itunes,
+            google_play,
+            preferred_pl,
+            preferred_frontend,
+            preferred_backend,
+            looking_for,
+            tech_interest,
+            topics,
+            my_idea,
+            ideation_talk_yes_no,
+            technical_talk_yes_no,
+            anything_else) = row
         # We process Google Dirve images.
         if picture.startswith('https://drive.google.com'):
             slices = picture.split('/')
-            if len(slices) != 7:
+            if len(slices) == 7:
+                picture = 'https://drive.google.com/uc?export=view&id=' + slices[5]
+            elif len(slices) == 4:
+                picture = 'https://drive.google.com/uc?export=view&id=' + picture.split('=')[1]
+            else:
                 print >> sys.stderr, "ERROR for %s" % picture
                 continue
-            picture = 'https://drive.google.com/uc?export=view&id=' + slices[5]
         USERS.append({
             'name': name,
             'role': role,
@@ -61,13 +62,14 @@ with open('data.csv') as csvfile:
             'picture': picture,
             'country_ori': country_ori,
             'country_resi': country_resi,
-            'bio': bio,
+            'bio': bio_short,
             'secret_fact': secret_fact,
             'secret_power': secret_power,
             'looking_for': looking_for,
             'tech_interest': tech_interest,
             'offline_hobby': offline_hobby,
-            'linkedin': linkedin})
+            'linkedin': linkedin,
+            'github': github})
 
 
 from jinja2 import Environment, FileSystemLoader
