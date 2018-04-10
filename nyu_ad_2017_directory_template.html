@@ -12,22 +12,22 @@ body {
 .cell {
     width: 750px;
     max-width: 1200px;
-    height: 420px;
+    height: 320px;
     background: #00A2B0;
     margin: auto;
     padding: 10px;
 }
 .cell-left {
-    width: 500px;
-    height: 400px;
+    width: 300px;
+    height: 300px;
     position: relative;
     background: #57068C;
     float: left;
 }
 .cell-right {
-    height: 400px;
+    height: 300px;
     position: relative;
-    margin-left: 510px;
+    margin-left: 310px;
 }
 
 .profile-pic {
@@ -51,8 +51,8 @@ body {
 .hackathon-logo {
     width: 65px;
     position:absolute;
-    left: 25px;
-    bottom: 25px;
+    left: 5px;
+    bottom: 5px;
     opacity: 0.5;
     filter: alpha(opacity=50);
 }
@@ -60,8 +60,8 @@ body {
 .nyuad-logo {
     width: 65px;
     position:absolute;
-    left: 105px;
-    bottom: 25px;
+    left: 230px;
+    bottom: 5px;
     opacity: 0.5;
     filter: alpha(opacity=50);
 }
@@ -73,9 +73,9 @@ body {
     right: -10px;
     bottom: -10px;
     z-index: 5;
-    border-top: 160px solid transparent;
-    border-bottom: 160px solid #00A2B0;
-    border-left: 160px solid transparent;
+    border-top: 64px solid transparent;
+    border-bottom: 64px solid #00A2B0;
+    border-left: 64px solid transparent;
 }
 
 .triangle-white {
@@ -84,9 +84,9 @@ body {
     position:absolute;
     right: -10px;
     bottom: -10px;
-    border-top: 330px solid transparent;
-    border-bottom: 330px solid white;
-    border-left: 330px solid transparent;
+    border-top: 132px solid transparent;
+    border-bottom: 132px solid white;
+    border-left: 132px solid transparent;
 }
 
 .floating-text {
@@ -129,7 +129,7 @@ body {
     font-size: 90%;
     font-weight: bold;
 }
-.bio { font-size: 66%; }
+.bio { font-size: 75%; }
 .attr { text-decoration: underline; }
 .text-normal { font-size: 90%; }
 .text-small { font-size: 80%; }
@@ -159,23 +159,21 @@ body {
     <div class="cell-left">
         <div align="center" class="profile-frame" style="background-image: url({{u.picture}});">
              <img class="hackathon-logo" src="http://sites.nyuad.nyu.edu/hackathon/wp-content/uploads/2015/09/hackathon-logo.png">
-            <img class="nyuad-logo" src="http://nyuad.nyu.edu/apps/nyuad/docroot/images/global/logo-155.png">
+            <img class="nyuad-logo" src="https://yt3.ggpht.com/-lsHd6ZQnpuk/AAAAAAAAAAI/AAAAAAAAAAA/-CuFAb-Ha-A/s288-mo-c-c0xffffffff-rj-k-no/photo.jpg">
         </div>
     </div>
     <div class="cell-right">
         <div class="floating-text" style="overflow-y: auto;">
             <div class="name field">
                 <span class="name">{{u.name}}</span>
-            </div>
-            <div class="role field">
                 <span class="role">({{u.role}})</span>
             </div>
             <div class="affiliation field">
                 <span class="text-normal">{{u.affiliation}}</span>
             </div>
             <div class="country field">
-                <span class="text-normal">Country</span>
-                <span class="text-small">(origin/residency):</span><br/>
+                <span class="attr text-normal">Country</span>
+                <span class="text-small">(origin/residency):</span>
                 <span class="text-normal">{{u.country_ori}} / {{u.country_resi}}</span>
             </div>
             <div class="tech_interest field">
@@ -185,7 +183,7 @@ body {
                 </span>
             </div>
             <div class="bio field">
-                More about you: {{u.bio}}
+                <span class="attr">More about you:</span> {{u.bio}}
             </div>
             <div class="offline_hobby field">
                 <span class="text-normal">
@@ -195,6 +193,7 @@ body {
             </div>
             <div class="linkedin field">
                 <a class="text-normal" href="{{u.linkedin}}">LinkedIn</a>
+                <a class="text-normal" href="{{u.github}}">GitHub</a>
             </div>
         </div>
         <div class="floating-triangles">
