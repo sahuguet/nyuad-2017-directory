@@ -51,19 +51,15 @@ body {
 .hackathon-logo {
     width: 65px;
     position:absolute;
-    left: 5px;
-    bottom: 5px;
-    opacity: 0.5;
-    filter: alpha(opacity=50);
+    right: 75px;
+    bottom: 0px;
 }
 
 .nyuad-logo {
     width: 65px;
     position:absolute;
-    left: 230px;
-    bottom: 5px;
-    opacity: 0.5;
-    filter: alpha(opacity=50);
+    right: 0px;
+    bottom: 0px;
 }
 
 .triangle-blue {
@@ -130,7 +126,10 @@ body {
     font-weight: bold;
 }
 .bio { font-size: 75%; }
-.attr { text-decoration: underline; }
+.attr {
+  text-decoration: underline;
+  font-weight: bold
+}
 .text-normal { font-size: 90%; }
 .text-small { font-size: 80%; }
 
@@ -145,7 +144,7 @@ body {
 <br/>
 <br/>
 <br/>
-<h1 align="center">Meet the 2017 NYUAD Hackers for Social Good in the Arab World</h1>
+<h1 align="center">Meet the 2018 NYUAD Hackers for Social Good in the Arab World</h1>
 <br/>
 <br/>
 <br class="footer"/>
@@ -158,8 +157,6 @@ body {
 <section class="cell {{ loop.cycle('footer', '') }}">
     <div class="cell-left">
         <div align="center" class="profile-frame" style="background-image: url({{u.picture}});">
-             <img class="hackathon-logo" src="http://sites.nyuad.nyu.edu/hackathon/wp-content/uploads/2015/09/hackathon-logo.png">
-            <img class="nyuad-logo" src="https://yt3.ggpht.com/-lsHd6ZQnpuk/AAAAAAAAAAI/AAAAAAAAAAA/-CuFAb-Ha-A/s288-mo-c-c0xffffffff-rj-k-no/photo.jpg">
         </div>
     </div>
     <div class="cell-right">
@@ -196,12 +193,14 @@ body {
                 <a class="text-normal" href="{{u.github}}">GitHub</a>
             </div>
         </div>
-        <div class="floating-triangles">
+        <img class="hackathon-logo" src="https://drive.google.com/uc?export=view&id=1qJvTN-Wan6PX_t24iq3_hbTzqDVSnp2o">
+        <img class="nyuad-logo" src="https://drive.google.com/uc?export=view&id=1Q_zWjbubJohNLXbl4kr4FALDlZErIcOT">
+        <!--<div class="floating-triangles">
             <div class="triangle-blue"></div>
         </div>
         <div class="floating-triangles">
             <div class="triangle-white"></div>
-        </div>
+        </div>-->
     </div>
 </section>
 <br/>
