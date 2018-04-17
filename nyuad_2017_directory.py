@@ -10,6 +10,7 @@ USERS = []
 with open('data.csv') as csvfile:
     reader = csv.reader(csvfile)
     reader.next()
+    data = []
     for row in reader:
         (
             t,
@@ -22,7 +23,7 @@ with open('data.csv') as csvfile:
             first_time,
             experience,
             affiliation,
-             job_title,
+            job_title,
             gender,
             country_ori,
             country_resi,
@@ -45,7 +46,48 @@ with open('data.csv') as csvfile:
             ideation_talk_yes_no,
             technical_talk_yes_no,
             anything_else) = row
+        if (picture):
+          data.insert(0, row)
+        else:
+          data.append(row)
+
+    for row in data:
+        (
+              t,
+              email,
+              name,
+              facebook,
+              linkedin,
+              twitter,
+              role,
+              first_time,
+              experience,
+              affiliation,
+              job_title,
+              gender,
+              country_ori,
+              country_resi,
+              bio_short,
+              bio_long,
+              picture,
+              secret_power,
+              secret_fact,
+              offline_hobby,
+              github,
+              itunes,
+              google_play,
+              preferred_pl,
+              preferred_frontend,
+              preferred_backend,
+              looking_for,
+              tech_interest,
+              topics,
+              my_idea,
+              ideation_talk_yes_no,
+              technical_talk_yes_no,
+              anything_else) = row
         # We process Google Dirve images.
+        picture = picture.replace(' ', '')
         if picture.startswith('https://drive.google.com'):
             slices = picture.split('/')
             if len(slices) == 7:
@@ -54,7 +96,7 @@ with open('data.csv') as csvfile:
                 picture = 'https://drive.google.com/uc?export=view&id=' + picture.split('=')[1]
             else:
                 print >> sys.stderr, "ERROR for %s" % picture
-                continue
+
         USERS.append({
             'name': name,
             'role': role,
