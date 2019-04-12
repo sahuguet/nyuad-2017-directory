@@ -1,4 +1,4 @@
-# nyuad-2017-directory
+# NYUAD Hackathon for the Social Good - Tools
 HTML page for NYU AD hackathon directory
 
 ### To build the site
@@ -15,3 +15,4 @@ To make changes to the output, you can:
 ### Issues with pictures
 Some people provided links to pictures that cannot be embedded into an HTML page.
 The easiest way is to download them manually into Google Drive and serve them from there.
+
