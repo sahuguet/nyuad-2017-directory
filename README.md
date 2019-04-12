@@ -4,7 +4,7 @@ HTML page for NYU AD hackathon directory
 ### To build the site
 You need to
 - grab the CVS file from the Google Spreadsheet
-- run the following Python code: `python nyuad_2017_directory.py  > nyuad_2017_directory.html`. This will create an HTML file.
+- run the following Python code: `python generate_directory.py  > directory.html`. This will create an HTML file.
 
 ### To make changes to the output
 The HTML is generated from the CSV data and from a Jija template.

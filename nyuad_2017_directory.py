@@ -6,8 +6,11 @@ import sys
 reload(sys)
 sys.setdefaultencoding("utf-8")
 
+INPUT_DATA = 'data.csv'
+INPUT_TEMPLATE = 'template.html'
+
 USERS = []
-with open('data.csv') as csvfile:
+with open(INPUT_DATA) as csvfile:
     reader = csv.reader(csvfile)
     reader.next()
     data = []
@@ -117,6 +120,7 @@ with open('data.csv') as csvfile:
 from jinja2 import Environment, FileSystemLoader
 env = Environment(loader=FileSystemLoader("."),
         extensions=['jinja2.ext.with_'])
-template = env.get_template('nyu_ad_2017_directory_template.html')
+template = env.get_template(INPUT_TEMPLATE)
 html = template.render({'users': USERS})
 print html
+print >> sys.stderr, "\nCompleted!"
