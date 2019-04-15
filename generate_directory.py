@@ -1,7 +1,7 @@
 # coding: utf-8
 
 import csv
-
+import random
 import sys
 reload(sys)
 sys.setdefaultencoding("utf-8")
@@ -26,8 +26,13 @@ def load_blacklist():
   return blacklist
 
 
+print >> sys.stderr, "INFO: loading blacklist."
 blacklist = load_blacklist()
+
+print >> sys.stderr, "\n"
+print >> sys.stderr, "INFO: loading people."
 users = []
+picture_ok = 0
 with open(INPUT_DATA) as csvfile:
     reader = csv.reader(csvfile)
     reader.next()
@@ -72,7 +77,13 @@ with open(INPUT_DATA) as csvfile:
         elif (email in blacklist):
           data.append(row)
         else:
+          picture_ok += 1
           data.insert(0, row)
+
+    # shuffle people that have valid pictures. Otherwise the default order is least recently edited in Google Forms.
+    data_copy = data[:picture_ok]
+    random.shuffle(data_copy)
+    data[:picture_ok] = data_copy
 
     for row in data:
         (
