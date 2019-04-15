@@ -9,7 +9,25 @@ sys.setdefaultencoding("utf-8")
 INPUT_DATA = 'data.csv'
 INPUT_TEMPLATE = 'template.html'
 
-USERS = []
+"""
+Loads a manual blacklist from 'blacklist.csv' for people who have been having problems with their profile pictures. Reason is that people without images must appear at the end of the website, otherwise it looks bad.
+"""
+def load_blacklist():
+  blacklist = []
+  try:
+    with open('blacklist.csv') as blacklist_fp:
+      for email in blacklist_fp:
+        email = email.rstrip("\n\r")
+        if email:
+          print >> sys.stderr, "INFO: blacklisting: %s." % email
+          blacklist.append(email)
+  except IOError as e:
+    print >> sys.stderr, "INFO: blacklist.csv file not found."
+  return blacklist
+
+
+blacklist = load_blacklist()
+users = []
 with open(INPUT_DATA) as csvfile:
     reader = csv.reader(csvfile)
     reader.next()
@@ -49,10 +67,12 @@ with open(INPUT_DATA) as csvfile:
             ideation_talk_yes_no,
             technical_talk_yes_no,
             anything_else) = row
-        if (picture):
-          data.insert(0, row)
-        else:
+        if (not picture):
           data.append(row)
+        elif (email in blacklist):
+          data.append(row)
+        else:
+          data.insert(0, row)
 
     for row in data:
         (
@@ -98,9 +118,9 @@ with open(INPUT_DATA) as csvfile:
             elif len(slices) == 4:
                 picture = 'https://drive.google.com/uc?export=view&id=' + picture.split('=')[1]
             else:
-                print >> sys.stderr, "ERROR for %s" % picture
+                print >> sys.stderr, "ERROR %s (%s) with image %s" % (name, email, picture)
 
-        USERS.append({
+        users.append({
             'name': name,
             'role': role,
             'affiliation': affiliation,
@@ -121,6 +141,6 @@ from jinja2 import Environment, FileSystemLoader
 env = Environment(loader=FileSystemLoader("."),
         extensions=['jinja2.ext.with_'])
 template = env.get_template(INPUT_TEMPLATE)
-html = template.render({'users': USERS})
+html = template.render({'users': users})
 print html
 print >> sys.stderr, "\nCompleted!"
