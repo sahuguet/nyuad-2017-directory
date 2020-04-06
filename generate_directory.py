@@ -8,6 +8,7 @@ sys.setdefaultencoding("utf-8")
 
 INPUT_DATA = 'data.csv'
 INPUT_TEMPLATE = 'template.html'
+SWAPS_FILE = 'swaps.csv'
 BLACKLIST_FILE = 'blacklist.csv'
 
 """
@@ -25,6 +26,21 @@ def load_blacklist():
 	except IOError as e:
 		print >> sys.stderr, "INFO: blacklist.csv file not found."
 	return blacklist
+
+
+def load_swaps():
+	swaps = {}
+	try:
+		with open(SWAPS_FILE) as swaps_fp:
+			reader = csv.reader(swaps_fp)
+			for row in reader:
+				(src, dst) = row
+				dst = dst.rstrip("\n\r")
+				swaps[src] = dst
+	except IOError as e:
+		print >> sys.stderr, "INFO: swaps file not found."
+	return swaps
+
 
 def main():
 	print >> sys.stderr, "INFO: loading blacklist."
@@ -128,6 +144,9 @@ def main():
 								technical_talk_yes_no,
 								anything_else) = row
 					# We process Google Dirve images.
+					if (picture in swaps):
+						picture = swaps[picture]
+
 					picture = picture.replace(' ', '')
 					if picture.startswith('https://drive.google.com'):
 							slices = picture.split('/')
