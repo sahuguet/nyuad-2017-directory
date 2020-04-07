@@ -11,40 +11,6 @@ INPUT_DATA = 'data.csv'
 INPUT_TEMPLATE = 'template.html'
 SWAPS_FILE = 'swaps.csv'
 BLACKLIST_FILE = 'blacklist.csv'
-
-"""
-Loads a manual blacklist from 'blacklist.csv' for people who have been having problems with their profile pictures. Reason is that people without images must appear at the end of the website, otherwise it looks bad.
-"""
-def load_blacklist():
-	blacklist = []
-	try:
-		with open(BLACKLIST_FILE) as blacklist_fp:
-			for email in blacklist_fp:
-				email = email.rstrip("\n\r")
-				if email:
-					print >> sys.stderr, "INFO: blacklisting: %s." % email
-					blacklist.append(email)
-	except IOError as e:
-		print >> sys.stderr, "INFO: blacklist.csv file not found."
-	return blacklist
-
-"""
-Loads a CSV file that contains <URL_FROM>,<URL_TO> for people who are having troubles getting the URL right, and the logic in this script deson't solve it
-"""
-def load_swaps():
-	swaps = {}
-	try:
-		with open(SWAPS_FILE) as swaps_fp:
-			reader = csv.reader(swaps_fp)
-			for rawRow in reader:
-				(src, dst) = rawRow
-				dst = dst.rstrip("\n\r")
-				swaps[src] = dst
-	except IOError as e:
-		print >> sys.stderr, "INFO: swaps file not found."
-	return swaps
-
-
 DataRow = namedtuple(
 	'DataRow',
 	[
@@ -82,6 +48,40 @@ DataRow = namedtuple(
 		'ideation_talk_yes_no',
 		'technical_talk_yes_no',
 		'anything_else'])
+
+
+"""
+Loads a manual blacklist from 'blacklist.csv' for people who have been having problems with their profile pictures. Reason is that people without images must appear at the end of the website, otherwise it looks bad.
+"""
+def load_blacklist():
+	blacklist = []
+	try:
+		with open(BLACKLIST_FILE) as blacklist_fp:
+			for email in blacklist_fp:
+				email = email.rstrip("\n\r")
+				if email:
+					print >> sys.stderr, "INFO: blacklisting: %s." % email
+					blacklist.append(email)
+	except IOError as e:
+		print >> sys.stderr, "INFO: blacklist.csv file not found."
+	return blacklist
+
+
+"""
+Loads a CSV file that contains <URL_FROM>,<URL_TO> for people who are having troubles getting the URL right, and the logic in this script deson't solve it
+"""
+def load_swaps():
+	swaps = {}
+	try:
+		with open(SWAPS_FILE) as swaps_fp:
+			reader = csv.reader(swaps_fp)
+			for rawRow in reader:
+				(src, dst) = rawRow
+				dst = dst.rstrip("\n\r")
+				swaps[src] = dst
+	except IOError as e:
+		print >> sys.stderr, "INFO: swaps file not found."
+	return swaps
 
 
 def convertDataRow(rawRow):
