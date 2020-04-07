@@ -157,8 +157,9 @@ def main():
 
 
 	from jinja2 import Environment, FileSystemLoader
-	env = Environment(loader=FileSystemLoader("."),
-					extensions=['jinja2.ext.with_'])
+	env = Environment(
+		loader=FileSystemLoader("."),
+		extensions=['jinja2.ext.with_'])
 	template = env.get_template(INPUT_TEMPLATE)
 	html = template.render({'users': users})
 	print html
