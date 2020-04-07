@@ -88,8 +88,47 @@ def convertDataRow(rawRow):
 	return DataRow(*rawRow)
 
 
+def put_no_pictures_at_end(data, blacklist):
+	result = []
+	picture_ok = 0
+	for row in data:
+		if (not row.picture):
+			result.append(row)
+		elif (row.email in blacklist):
+			result.append(row)
+		else:
+			picture_ok += 1
+			result.insert(0, row)
+
+	return result
+
+
 def shuffle_participants(data):
 	random.shuffle(data)
+	return data
+
+
+def mix_women_men(data):
+	women = [row for row in data if row.gender == 'Female']
+	menAndDefault = [row for row in data if row.gender != 'Female']
+	i = 0
+	j = 0
+	result = []
+	while (i < len(women) and j < len(menAndDefault)):
+		result.append(women[i])
+		result.append(menAndDefault[j])
+		i += 1
+		j += 1
+
+	while (i < len(women)):
+		result.append(women[i])
+		i += 1
+
+	while (j < len(menAndDefault)):
+		result.append(menAndDefault[j])
+		j += 1
+
+	return result
 
 
 def main():
@@ -102,25 +141,20 @@ def main():
 	print >> sys.stderr, "\n"
 	print >> sys.stderr, "INFO: loading people."
 	users = []
-	picture_ok = 0
 	data = []
 	with open(INPUT_DATA) as csvfile:
 		reader = csv.reader(csvfile)
 		reader.next()
 		for rawRow in reader:
 			row = convertDataRow(rawRow)
-			if (not row.picture):
-				data.append(row)
-			elif (row.email in blacklist):
-				data.append(row)
-			else:
-				picture_ok += 1
-				data.insert(0, row)
+			data.append(row)
 
-	# shuffle people that have valid pictures. Otherwise the default order is least recently edited in Google Forms.
-	data_copy = data[:picture_ok]
-	shuffle_participants(data_copy)
-	data[:picture_ok] = data_copy
+	data = shuffle_participants(data)
+	data = put_no_pictures_at_end(data, blacklist)
+	data = mix_women_men(data)
+	# data_copy = data[:picture_ok]
+	# data_copy = shuffle_participants(data_copy)
+	# data[:picture_ok] = data_copy
 
 	for row in data:
 			# We process Google Dirve images.
