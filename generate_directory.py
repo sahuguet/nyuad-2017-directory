@@ -99,62 +99,61 @@ def main():
 	print >> sys.stderr, "INFO: loading swaps"
 	swaps = load_swaps()
 
-
 	print >> sys.stderr, "\n"
 	print >> sys.stderr, "INFO: loading people."
 	users = []
 	picture_ok = 0
+	data = []
 	with open(INPUT_DATA) as csvfile:
-			reader = csv.reader(csvfile)
-			reader.next()
-			data = []
-			for rawRow in reader:
-				row = convertDataRow(rawRow)
-				if (not row.picture):
-					data.append(row)
-				elif (row.email in blacklist):
-					data.append(row)
+		reader = csv.reader(csvfile)
+		reader.next()
+		for rawRow in reader:
+			row = convertDataRow(rawRow)
+			if (not row.picture):
+				data.append(row)
+			elif (row.email in blacklist):
+				data.append(row)
+			else:
+				picture_ok += 1
+				data.insert(0, row)
+
+	# shuffle people that have valid pictures. Otherwise the default order is least recently edited in Google Forms.
+	data_copy = data[:picture_ok]
+	shuffle_participants(data_copy)
+	data[:picture_ok] = data_copy
+
+	for row in data:
+			# We process Google Dirve images.
+			profile_picture_url = row.picture
+			if (profile_picture_url in swaps):
+				profile_picture_url = swaps[profile_picture_url]
+
+			profile_picture_url = profile_picture_url.replace(' ', '')
+			if profile_picture_url.startswith('https://drive.google.com'):
+				slices = profile_picture_url.split('/')
+				if len(slices) == 7:
+					profile_picture_url = 'https://drive.google.com/uc?export=view&id=' + slices[5]
+				elif len(slices) == 4:
+					profile_picture_url = 'https://drive.google.com/uc?export=view&id=' + profile_picture_url.split('=')[1]
 				else:
-					picture_ok += 1
-					data.insert(0, row)
+					print >> sys.stderr, "ERROR %s (%s) with image %s" % (row.name, row.email, row.picture)
 
-			# shuffle people that have valid pictures. Otherwise the default order is least recently edited in Google Forms.
-			data_copy = data[:picture_ok]
-			shuffle_participants(data_copy)
-			data[:picture_ok] = data_copy
-
-			for row in data:
-					# We process Google Dirve images.
-					profile_picture_url = row.picture
-					if (profile_picture_url in swaps):
-						profile_picture_url = swaps[profile_picture_url]
-
-					profile_picture_url = profile_picture_url.replace(' ', '')
-					if profile_picture_url.startswith('https://drive.google.com'):
-							slices = profile_picture_url.split('/')
-							if len(slices) == 7:
-									profile_picture_url = 'https://drive.google.com/uc?export=view&id=' + slices[5]
-							elif len(slices) == 4:
-									profile_picture_url = 'https://drive.google.com/uc?export=view&id=' + profile_picture_url.split('=')[1]
-							else:
-									print >> sys.stderr, "ERROR %s (%s) with image %s" % (row.name, row.email, row.picture)
-
-					user = {
-							'name': row.name,
-							'role': row.role,
-							'affiliation': row.affiliation,
-							'picture': profile_picture_url,
-							'country_ori': row.country_ori,
-							'country_resi': row.country_resi,
-							'bio': row.bio_short,
-							'secret_fact': row.secret_fact,
-							'secret_power': row.secret_power,
-							'looking_for': row.looking_for,
-							'tech_interest': row.tech_interest,
-							'offline_hobby': row.offline_hobby,
-							'linkedin': row.linkedin,
-							'github': row.github};
-					users.append(user)
+			user = {
+				'name': row.name,
+				'role': row.role,
+				'affiliation': row.affiliation,
+				'picture': profile_picture_url,
+				'country_ori': row.country_ori,
+				'country_resi': row.country_resi,
+				'bio': row.bio_short,
+				'secret_fact': row.secret_fact,
+				'secret_power': row.secret_power,
+				'looking_for': row.looking_for,
+				'tech_interest': row.tech_interest,
+				'offline_hobby': row.offline_hobby,
+				'linkedin': row.linkedin,
+				'github': row.github};
+			users.append(user)
 
 
 	from jinja2 import Environment, FileSystemLoader
