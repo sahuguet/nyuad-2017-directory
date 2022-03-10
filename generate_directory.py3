@@ -16,7 +16,7 @@ DataRow = namedtuple(
 	[
 		'ttimestamp',
 		'email',
-		'name',
+		'fullname',
 		'facebook',
 		'linkedin',
 		'twitter',
@@ -59,20 +59,39 @@ DataRow = namedtuple(
 
 """
 Loads a manual blacklist from 'blacklist.csv' for people who have been having problems with their profile pictures. Reason is that people without images must appear at the end of the website, otherwise it looks bad.
+
+Blacklist file format:
+```
+	email1@gmail.com
+	email2@ymail.com
+	Foo Bar  # fullname, be careful with collisions
+	...
+```
+
 """
 def load_blacklist():
 	blacklist = []
 	try:
 		with open(BLACKLIST_FILE) as blacklist_fp:
-			for email in blacklist_fp:
-				email = email.rstrip("\n\r")
-				if email:
-					print("INFO: blacklisting: %s.", email, file=sys.stderr)
-					blacklist.append(email)
+			for blacklist_entry in blacklist_fp:
+				blacklist_entry = blacklist_entry.rstrip("\n\r")
+				if blacklist_entry:
+					print("INFO: blacklisting: ", blacklist_entry, file=sys.stderr)
+					blacklist.append(blacklist_entry)
 	except IOError as e:
 		print("INFO: blacklist.csv file not found.", file=sys.stderr)
 	return blacklist
 
+
+# Todo: try to minimeze collisions, somehow...
+def is_blacklisted(blacklist, person_tuple):
+	if (person_tuple.email in blacklist):
+		return True
+
+	if (person_tuple.fullname in blacklist):
+		return True
+
+	return False
 
 """
 Loads a CSV file that contains <URL_FROM>,<URL_TO> for people who are having troubles getting the URL right, and the logic in this script deson't solve it
@@ -91,20 +110,18 @@ def load_swaps():
 	return swaps
 
 
-def convertDataRow(rawRow):
+def convert_data_row(rawRow):
 	return DataRow(*rawRow)
 
 
 def put_no_pictures_at_end(data, blacklist):
 	result = []
-	picture_ok = 0
 	for row in data:
 		if (not row.picture):
 			result.append(row)
-		elif (row.email in blacklist):
+		elif is_blacklisted(blacklist, row):
 			result.append(row)
 		else:
-			picture_ok += 1
 			result.insert(0, row)
 
 	return result
@@ -122,28 +139,30 @@ def mix_women_men(data, blacklist):
 	j = 0
 	result = []
 	while (i < len(women) and j < len(menAndDefault)):
-		if women[i].email in blacklist:
+		if is_blacklisted(blacklist, women[i]):
 			break
-		if menAndDefault[i].email in blacklist:
+		if is_blacklisted(blacklist, menAndDefault[i]):
 			break
 		result.append(women[i])
 		result.append(menAndDefault[j])
 		i += 1
 		j += 1
 
-	# put women with pictures
+	# put any leftover people with pictures
+
 	while (i < len(women)):
-		if women[i].email in blacklist:
+		if is_blacklisted(blacklist, women[i]):
 			break
 		result.append(women[i])
 		i += 1
 
-	# put mens with pictures
 	while (j < len(menAndDefault)):
-		if menAndDefault[i].email in blacklist:
+		if is_blacklisted(blacklist, menAndDefault[i]):
 			break
 		result.append(menAndDefault[j])
 		j += 1
+
+	# put any leftover people without pictures
 
 	while (i < len(women)):
 		result.append(women[i])
@@ -154,6 +173,28 @@ def mix_women_men(data, blacklist):
 		j += 1
 
 	return result
+
+
+def process_profile_picture(person_tuple, swaps):
+	profile_picture_url = person_tuple.picture
+
+	if (profile_picture_url in swaps):
+		profile_picture_url = swaps[profile_picture_url]
+
+	profile_picture_url = profile_picture_url.replace(' ', '')
+
+	if not profile_picture_url.startswith('https://drive.google.com'):
+		return profile_picture_url
+
+	slices = profile_picture_url.split('/')
+	if len(slices) == 7:
+		return 'https://drive.google.com/uc?export=view&id=' + slices[5]
+	elif len(slices) == 4:
+		return 'https://drive.google.com/uc?export=view&id=' + profile_picture_url.split('=')[1]
+	else:
+		print("ERROR %s (%s) with image %s" % (
+			person_tuple.fullname, person_tuple.email, person_tuple.picture), file=sys.stderr)
+		return ""
 
 
 def main():
@@ -169,37 +210,20 @@ def main():
 	data = []
 	with open(INPUT_DATA) as csvfile:
 		reader = csv.reader(csvfile)
-		#reader.next()
 		next(reader)
 		for rawRow in reader:
-			row = convertDataRow(rawRow)
+			row = convert_data_row(rawRow)
 			data.append(row)
 
 	data = shuffle_participants(data)
 	data = put_no_pictures_at_end(data, blacklist)
 	data = mix_women_men(data, blacklist)
-	# data_copy = data[:picture_ok]
-	# data_copy = shuffle_participants(data_copy)
-	# data[:picture_ok] = data_copy
 
 	for row in data:
-			# We process Google Dirve images.
-			profile_picture_url = row.picture
-			if (profile_picture_url in swaps):
-				profile_picture_url = swaps[profile_picture_url]
-
-			profile_picture_url = profile_picture_url.replace(' ', '')
-			if profile_picture_url.startswith('https://drive.google.com'):
-				slices = profile_picture_url.split('/')
-				if len(slices) == 7:
-					profile_picture_url = 'https://drive.google.com/uc?export=view&id=' + slices[5]
-				elif len(slices) == 4:
-					profile_picture_url = 'https://drive.google.com/uc?export=view&id=' + profile_picture_url.split('=')[1]
-				else:
-					print("ERROR %s (%s) with image %s",row.name, row.email, row.picture, file=sys.stderr)
+			profile_picture_url = process_profile_picture(row, swaps)
 
 			user = {
-				'name': row.name,
+				'fullname': row.fullname,
 				'role': row.role,
 				'affiliation': row.affiliation,
 				'picture': profile_picture_url,
